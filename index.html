@@ -17,6 +17,7 @@
       background: #03050A;
       color: #FFFFFF;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     /* ===== STICKY NAVIGATION ===== */
@@ -69,10 +70,9 @@
     .nav-links a.active {
       color: #00B4FF;
       border-bottom-color: #00B4FF;
-      transition: all 0.25s ease;
     }
 
-    /* ===== SECTIONS ===== */
+    /* ===== SECTIONS with PARALLAX ===== */
     section {
       min-height: 100vh;
       width: 100%;
@@ -86,7 +86,7 @@
       background-repeat: no-repeat;
     }
 
-    /* Fast‑loading Unsplash images that match each section */
+    /* Fast‑loading Unsplash images */
     .spark-bg {
       background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&auto=format');
     }
@@ -114,17 +114,22 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(3, 5, 10, 0.65);
+      background: rgba(3, 5, 10, 0.55);
       z-index: 1;
     }
 
+    /* ===== FROSTED GLASS CONTENT PANELS ===== */
     .section-content {
       position: relative;
       z-index: 2;
       max-width: 800px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 2.5rem;
       text-align: left;
+      background: rgba(3, 5, 10, 0.45);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      border: 1px solid rgba(0, 180, 255, 0.2);
       opacity: 0;
       transform: translateY(32px);
       transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
@@ -151,17 +156,72 @@
       line-height: 1.6;
       margin-bottom: 1.5rem;
       color: #F0F0F0;
-      max-width: 680px;
     }
 
     .section-content .stats {
       font-size: 0.9rem;
       color: #BBE6FF;
       font-weight: 500;
-      letter-spacing: -0.2px;
       border-left: 3px solid #00B4FF;
       padding-left: 1rem;
       margin-top: 1rem;
+    }
+
+    /* ===== INTERACTIVE MODULAR BOXES (Vision Section) ===== */
+    .modular-grid {
+      display: flex;
+      gap: 1.5rem;
+      margin: 2rem 0 1rem;
+      flex-wrap: wrap;
+    }
+
+    .modular-card {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 180, 255, 0.3);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .modular-card h3 {
+      color: #00B4FF;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modular-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* hover effect: hovered card glows, others dim */
+    .modular-grid:hover .modular-card:not(:hover) {
+      opacity: 0.5;
+      filter: blur(1px);
+    }
+
+    .modular-card:hover {
+      border-color: #00B4FF;
+      box-shadow: 0 0 25px rgba(0, 180, 255, 0.4);
+      transform: translateY(-5px);
+      background: rgba(0, 180, 255, 0.15);
+    }
+
+    /* ===== NUMBER COUNTER STYLES ===== */
+    .counter-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #00B4FF;
+      display: inline-block;
+      font-family: monospace;
+    }
+
+    .stats {
+      font-size: 1rem;
     }
 
     /* CTA Button */
@@ -175,7 +235,6 @@
       text-decoration: none;
       margin-top: 1rem;
       transition: transform 0.2s, background 0.2s;
-      font-size: 1rem;
     }
 
     .cta-button:hover {
@@ -204,192 +263,230 @@
         flex-wrap: wrap;
       }
       .section-content h2 {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
       .section-content p {
         font-size: 1rem;
       }
+      .modular-grid {
+        flex-direction: column;
+      }
+      .modular-card {
+        width: 100%;
+      }
       section {
         background-attachment: scroll;
+      }
+      .section-content {
+        margin: 1rem;
+        padding: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
 
-    <div class="nav-bar">
-        <div class="nav-container">
-            <div class="logo">MANTLE</div>
-            <ul class="nav-links">
-                <li><a href="#spark" class="nav-link" data-section="spark">Spark</a></li>
-                <li><a href="#vision" class="nav-link" data-section="vision">Vision</a></li>
-                <li><a href="#bridge" class="nav-link" data-section="bridge">Bridge</a></li>
-                <li><a href="#ecosystem" class="nav-link" data-section="ecosystem">Ecosystem</a></li>
-                <li><a href="#community" class="nav-link" data-section="community">Community</a></li>
-                <li><a href="#invite" class="nav-link" data-section="invite">Join</a></li>
-            </ul>
+  <div class="nav-bar">
+    <div class="nav-container">
+      <div class="logo">MANTLE</div>
+      <ul class="nav-links">
+        <li><a href="#spark" class="nav-link">Spark</a></li>
+        <li><a href="#vision" class="nav-link">Vision</a></li>
+        <li><a href="#bridge" class="nav-link">Bridge</a></li>
+        <li><a href="#ecosystem" class="nav-link">Ecosystem</a></li>
+        <li><a href="#community" class="nav-link">Community</a></li>
+        <li><a href="#invite" class="nav-link">Join</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main>
+    <!-- SECTION 1: SPARK -->
+    <section id="spark" class="spark-bg">
+      <div class="section-content">
+        <h2>The Spark</h2>
+        <p>Ethereum succeeded beyond imagination, but with success came congestion. Fees soared, throughput stalled, and the promise of global, accessible finance felt out of reach. Something had to change.</p>
+        <p>In 2022, a group of builders started asking a new question: <em>"What if scaling didn't require trade-offs?"</em> That question became Mantle!</p>
+        <div class="stats"> Ethereum L1 ⛓️: ~15 TPS · Mantle's answer? Modular Architecture!</div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: VISION (Interactive Modular Boxes) -->
+    <section id="vision" class="vision-bg">
+      <div class="section-content">
+        <h2>The Vision</h2>
+        <p>Mantle wasn't built to be another rollup. It was designed as a <strong>modular L2</strong> — separating execution, data availability, and settlement. This unlocks true scalability without sacrificing security.</p>
+        
+        <!-- Interactive Modular Boxes (show modularity) -->
+        <div class="modular-grid">
+          <div class="modular-card">
+            <h3>Execution</h3>
+            <p>Transactions processed on Mantle's high‑performance rollup.</p>
+          </div>
+          <div class="modular-card">
+            <h3>Settlement</h3>
+            <p>Finalized on Ethereum L1, inherits its security.</p>
+          </div>
+          <div class="modular-card">
+            <h3>Data Availability</h3>
+            <p>Powered by EigenLayer DA for ultra‑low costs.</p>
+          </div>
         </div>
-    </div>
-
-    <main>
-        <!-- SECTION 1: THE SPARK -->
-        <section id="spark" class="spark-bg">
-            <div class="section-content">
-                <h2>The Spark</h2>
-                <p>Ethereum succeeded beyond imagination, but with success came congestion. Fees soared, throughput stalled, and the promise of global, accessible finance felt out of reach. Something had to change.</p>
-                <p>In 2022, a group of builders started asking a new question: <em>"What if scaling didn't require trade-offs?"</em> That question became Mantle.</p>
-                <div class="stats">⛓️ Ethereum L1: ~15 TPS · Mantle's answer? Modular Architecture!</div>
-            </div>
-        </section>
-
-        <!-- SECTION 2: THE VISION -->
-        <section id="vision" class="vision-bg">
-            <div class="section-content">
-                <h2>The Vision</h2>
-                <p>Mantle wasn't built to be another rollup. It was designed as a <strong>modular L2</strong> — separating execution, data availability, and settlement. This unlocks true scalability without sacrificing security.</p>
-                <p>Backed by a $200M ecosystem fund, Mantle became the first L2 to use EigenLayer's DA for ultra‑low fees and high throughput.</p>
-                <div class="stats"> Modular design 📐 · 4,000+ TPS potential · Near‑zero gas fees</div>
-            </div>
-        </section>
-
-        <!-- SECTION 3: THE BRIDGE -->
-        <section id="bridge" class="bridge-bg">
-            <div class="section-content">
-                <h2>The Bridge</h2>
-                <p>In July 2023, the Mantle Bridge went live. Overnight, users could move ETH, USDC, and other assets between Ethereum L1 and Mantle L2 - trustlessly, efficiently, with finality in minutes instead of days!</p>
-                <p>Within months, over <strong>$100M in TVL</strong> crossed the bridge. Value found a new home. Liquidity flowed. The modular thesis was validated.</p>
-                <div class="stats"> $100M+ bridged 🌉 · 3–5 min finality · fully audited</div>
-            </div>
-        </section>
-
-        <!-- SECTION 4: THE ECOSYSTEM -->
-        <section id="ecosystem" class="ecosystem-bg">
-            <div class="section-content">
-                <h2>The Ecosystem</h2>
-                <p>DeFi, gaming, identity, RWAs: Mantle became the fertile ground where builders plant flags. <strong>mETH (Mantle Staked Ether)</strong> surpassed $1B in TVL, becoming one of the largest liquid staking tokens on L2.</p>
-                <p>Dozens of protocols now live: DEXs, lending markets, perpetuals, and the first L2-native NFT infrastructure. All built on Mantle's high‑performance bedrock.</p>
-                <div class="stats"> 150+ active dApps · $1.2B+ TVL · 1M+ unique wallets</div>
-            </div>
-        </section>
-
-        <!-- SECTION 5: THE COMMUNITY (Mantle Squad) -->
-        <section id="community" class="community-bg">
-            <div class="section-content">
-                <h2>The Community</h2>
-                <p>Mantle isn't just code, it's people! The <strong>Mantle Squad</strong> grew from a few hundred to over 2,800 active contributors across 20+ countries. They translate, build tools, create art, and onboard the next generation.</p>
-                <p>Monthly community calls, global meetups, and a treasury governed by $MNT holders. This is not a cult. It's a movement.</p>
-                <div class="stats"> 2,800+ active members 👥 · 20+ countries · 100% community driven</div>
-            </div>
-        </section>
-
-        <!-- SECTION 6: THE INVITATION -->
-        <section id="invite" class="invite-bg">
-            <div class="section-content">
-                <h2>The Invitation</h2>
-                <p>You've seen the spark. The vision. The bridge. The ecosystem. The community.</p>
-                <p>Now, guess what? it's your turn! Whether you're a builder, artist, writer, dreamer, or just whatever really, Mantle needs your voice. The modular future isn't finished. It's waiting for you!</p>
-                <a href="https://www.mantle.xyz/" target="_blank" class="cta-button">Join the unfolding →</a>
-                <div class="stats" style="margin-top: 1.5rem;">No permission needed. Just curiosity and a will to build.</div>
-            </div>
-        </section>
-    </main>
-    <div class="footer">
-        Mantle · The Unfolding — a storytelling journey told by JAY through real milestones. Background imagery from Unsplash.
-    </div>
-
-    <script>
-        // ========== SCROLL ANIMATION + ACTIVE NAV ==========
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
         
-        // Intersection Observer for fade-up + active nav
-        const observerOptions = {
-            threshold: 0.35,
-            rootMargin: "0px 0px -10% 0px"
-        };
+        <div class="stats"> Modular design 📐 · 4,000+ TPS potential · Near‑zero gas fees</div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: BRIDGE -->
+    <section id="bridge" class="bridge-bg">
+      <div class="section-content">
+        <h2>The Bridge</h2>
+        <p>In July 2023, the Mantle Bridge went live. Overnight, users could move ETH, USDC, and other assets between Ethereum L1 and Mantle L2 - trustlessly, efficiently, with finality in minutes instead of days! Amazing right?</p>
+        <p>Within months, over <strong>$100M in TVL</strong> crossed the bridge. Value found a new home. Liquidity flowed. The modular thesis was validated.</p>
+        <div class="stats"> $100M+ bridged 🌉 · 3–5 min finality · fully audited</div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ECOSYSTEM (with number counter) -->
+    <section id="ecosystem" class="ecosystem-bg">
+      <div class="section-content">
+        <h2>The Ecosystem</h2>
+        <p>DeFi, gaming, identity, RWAs: Mantle became the fertile ground where builders plant flags. <strong>mETH (Mantle Staked Ether)</strong> became one of the largest liquid staking tokens on L2.</p>
+        <p>Dozens of protocols now live: DEXs, lending markets, perpetuals, and the first L2-native NFT infrastructure.</p>
+        <div class="stats">
+          🚀 150+ active dApps · 
+          <span class="counter-number" id="tvlCounter" data-target="1.2">0</span>B+ TVL · 
+          1M+ unique wallets
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: COMMUNITY -->
+    <section id="community" class="community-bg">
+      <div class="section-content">
+        <h2>The Community</h2>
+        <p>Mantle isn't just code, it's people! The <strong>Mantle Squad</strong> grew from a few hundred to over 2,800 active contributors across 20+ countries. They translate, build tools, create art, and onboard the next generation.</p>
+        <p>Monthly community calls, global meetups, and a treasury governed by $MNT holders. This is not a cult. It's a movement.</p>
+        <div class="stats">👥 2,800+ active members · 20+ countries · 100% community driven</div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: INVITATION -->
+    <section id="invite" class="invite-bg">
+      <div class="section-content">
+        <h2>The Invitation</h2>
+        <p>You've seen the spark. The vision. The bridge. The ecosystem. The community.</p>
+        <p>Now, guess what? IT'S YOUR TURN. Whether you're a builder, artist, writer, dreamer, or whatever really, Mantle needs your voice! The modular future isn't finished. It's waiting for you.</p>
+        <a href="https://www.mantle.xyz/" target="_blank" class="cta-button">Join the unfolding →</a>
+        <div class="stats" style="margin-top: 1.5rem;"> No permission needed. Just curiosity and a will to build.</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">
+    Mantle · The Unfolding — a storytelling journey told by JAY through real milestones.
+  </div>
+
+  <script>
+    // ========== 1. INTERSECTION OBSERVER (fade-up + active nav + start counters) ==========
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    let countersStarted = false;
+
+    const observerOptions = {
+      threshold: 0.35,
+      rootMargin: "0px 0px -10% 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const sectionId = entry.target.getAttribute('id');
+        const correspondingLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+        const contentDiv = entry.target.querySelector('.section-content');
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const sectionId = entry.target.getAttribute('id');
-                const correspondingLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-                
-                // fade-up animation
-                const contentDiv = entry.target.querySelector('.section-content');
-                if (entry.isIntersecting) {
-                    contentDiv.classList.add('visible');
-                    
-                    // active nav style
-                    if (correspondingLink) {
-                        navLinks.forEach(link => link.classList.remove('active'));
-                        correspondingLink.classList.add('active');
-                    }
-                } else {
-                    // optional: keep content visible after first trigger? 
-                    // we keep visible to avoid flicker, but we can also remove class if needed
-                    // we'll keep visible for better UX
-                }
-            });
-        }, observerOptions);
-        
-        sections.forEach(section => {
-            observer.observe(section);
-            // pre-check for any already visible section on load
-            const rect = section.getBoundingClientRect();
-            const contentDiv = section.querySelector('.section-content');
-            if (rect.top < window.innerHeight - 100 && rect.bottom > 100) {
-                contentDiv.classList.add('visible');
-                const sectionId = section.getAttribute('id');
-                const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-                if (activeLink) {
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    activeLink.classList.add('active');
-                }
-            }
-        });
-        
-        // Smooth scroll for nav links (already handled by CSS, but we enhance)
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-        
-        // also handle manual scroll to update active underline correctly after scroll
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const scrollPosition = window.scrollY + 150; // offset for sticky nav
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionBottom = sectionTop + section.offsetHeight;
-                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
-        // Force first section content visible if not triggered (just in case)
-        window.addEventListener('load', () => {
-            const firstContent = document.querySelector('#spark .section-content');
-            if (firstContent && !firstContent.classList.contains('visible')) {
-                firstContent.classList.add('visible');
-            }
-            const activeLink = document.querySelector('.nav-link[href="#spark"]');
-            if (activeLink) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                activeLink.classList.add('active');
-            }
-        });
-    </script>
+        if (entry.isIntersecting) {
+          contentDiv.classList.add('visible');
+          
+          // Active nav style
+          if (correspondingLink) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            correspondingLink.classList.add('active');
+          }
+          
+          // Start number counter only when Ecosystem section appears
+          if (sectionId === 'ecosystem' && !countersStarted) {
+            countersStarted = true;
+            startCounter();
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // ========== 2. SMOOTH SCROLL FOR NAV ==========
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ========== 3. UPDATE ACTIVE NAV ON MANUAL SCROLL ==========
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollPosition = window.scrollY + 150;
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ========== 4. NUMBER COUNTER (0 → 1.2B) ==========
+    function startCounter() {
+      const counterElement = document.getElementById('tvlCounter');
+      const target = parseFloat(counterElement.getAttribute('data-target')); // 1.2
+      let current = 0;
+      const increment = target / 50; // smooth 50 steps
+      const updateCounter = () => {
+        current += increment;
+        if (current < target) {
+          counterElement.innerText = current.toFixed(1);
+          requestAnimationFrame(updateCounter);
+        } else {
+          counterElement.innerText = target;
+        }
+      };
+      updateCounter();
+    }
+
+    // Force first section visible if not triggered
+    window.addEventListener('load', () => {
+      const firstContent = document.querySelector('#spark .section-content');
+      if (firstContent && !firstContent.classList.contains('visible')) {
+        firstContent.classList.add('visible');
+      }
+      const activeLink = document.querySelector('.nav-link[href="#spark"]');
+      if (activeLink) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        activeLink.classList.add('active');
+      }
+    });
+  </script>
 </body>
 </html>
